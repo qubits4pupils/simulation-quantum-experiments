@@ -35,6 +35,7 @@ button {
 #simulation{
   max-height: 80vh;
   /*max-width: 1200px;*/
+  background-color: #ececec;
 }
 
 
