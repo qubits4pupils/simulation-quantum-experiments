@@ -13,11 +13,17 @@ export function getTranslate(el: SVGSVGElement) {
   return {x: matrix.e, y: matrix.f}
 }
 
+(window as any).getTranslate = getTranslate;
+
 export function centerSvgEl(svg: SVGSVGElement, el: SVGSVGElement) {
-  const bb = el.getBBox();
-  const translateCentering = svg.createSVGTransform();
-  translateCentering.setTranslate(-bb.x - bb.width / 2, -bb.y - bb.height / 2);
-  el.transform.baseVal.insertItemBefore(translateCentering, 9999); // put it in the back
+  const isCentered = el.transform.baseVal.length <= 1; // Note: for some reason the transforms when registered via insertItemBefore will persist while navigating back and forth. This fixes this issue.
+  // console.log('length of transforms=', isCentered)
+  if(isCentered){
+    const bb = el.getBBox();
+    const translateCentering = svg.createSVGTransform();
+    translateCentering.setTranslate(-bb.x - bb.width / 2, -bb.y - bb.height / 2);
+    el.transform.baseVal.insertItemBefore(translateCentering, 9999); // put it in the back
+  }
 }
 
 export function addTranslate(svg: SVGSVGElement, el: SVGSVGElement) {

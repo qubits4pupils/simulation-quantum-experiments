@@ -60,7 +60,7 @@ export function makeDraggable(svgRoot: SVGSVGElement, el: SVGSVGElement, dragTar
   }
 
   function startDrag(evt: MouseEvent | TouchEvent) {
-    console.log('startDrag called')
+    console.debug('startDrag called')
     if (!el.classList.contains('disabled')) {
       selectedElement = el;
       el.style.cursor = 'grabbing';
@@ -78,15 +78,12 @@ export function makeDraggable(svgRoot: SVGSVGElement, el: SVGSVGElement, dragTar
 
   function endDrag(evt: MouseEvent | TouchEvent) {
     if(selectedElement == null) return;
-    console.log('endDrag called')
-    console.log('currentlyHovered=', currentlyHovered.length);
+    console.debug('endDrag called')
     const coord = getMousePosition(svgRoot, evt);
     const dropCandidates = dropTargets.filter(dt => {
       return currentlyHovered.includes(dt)
     });
-    console.log('dropCandidates=', dropCandidates.length);
     if (dropCandidates.length) {
-      console.log('Drop Candidates = ', dropCandidates)
       dropCandidates.forEach(dc => {
         if (dc.listeners.onDrop) dc.listeners.onDrop!(selectedElement!, dc.el, coord)
       })
@@ -99,7 +96,6 @@ export function makeDraggable(svgRoot: SVGSVGElement, el: SVGSVGElement, dragTar
   }
 
   el.addEventListener('mousedown', (ev) => {
-    console.log('ev=', ev)
     if (ev.which === 1)
       startDrag(ev)
   });
@@ -117,20 +113,18 @@ export function makeDraggable(svgRoot: SVGSVGElement, el: SVGSVGElement, dragTar
   el.addEventListener('touchstart', startDrag);
   el.addEventListener('touchmove', drag);
   el.addEventListener('touchend', (ev)=>{
-    console.log('touchend!');
     endDrag(ev);
   });
   el.addEventListener('touchleave', (ev)=>{
-    console.log('touchleave!');
     endDrag(ev as any);
   });
   el.addEventListener('touchcancel', (ev)=>{
-    console.log('touchcancel!');
     endDrag(ev);
   });
 }
 
 export function makeDropZoneDropTarget(svgRoot: SVGSVGElement, zone: SVGSVGElement, dragTargetClass: string) {
+  // console.log('making drop zone drop targets, root=', svgRoot, 'zone=', zone)
   let ghostElement: SVGSVGElement | null = null;
   let ghostElementBB: BBox | null = null;
   const zoneBB = (zone as SVGSVGElement).getBBox();
@@ -143,7 +137,7 @@ export function makeDropZoneDropTarget(svgRoot: SVGSVGElement, zone: SVGSVGEleme
     zone,
     {
       onDragEnter: (el: SVGSVGElement, point: Point) => {
-        console.log('basedropzone: drag entered!')
+        console.debug('basedropzone: drag entered!')
         ghostElement = (el.cloneNode(true) as SVGSVGElement);
         ghostElement.setAttribute('opacity', '0.5');
         addTranslate(svgRoot, ghostElement);
@@ -152,14 +146,15 @@ export function makeDropZoneDropTarget(svgRoot: SVGSVGElement, zone: SVGSVGEleme
           x: zoneX,
           y: zoneY
         })
+        // console.log('attempting to insert on parent first the second as sibling before third', svgRoot, ghostElement, el)
         svgRoot.insertBefore(ghostElement, el);
       },
       onDragLeave: () => {
-        console.log('basedropzone: drag left!')
+        console.debug('basedropzone: drag left!')
         svgRoot.removeChild(ghostElement!);
       },
       onDrop: (el: SVGSVGElement, dropZone, point) => {
-        console.log('basedropzone: drop!');
+        console.debug('basedropzone: drop!');
         (el as any).currentPosition = dropZone.id;
         putSvgToTranslate(el!, {
           x: zoneX,
