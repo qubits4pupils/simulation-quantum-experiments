@@ -191,8 +191,6 @@ onMounted(() => {
     elements[key] = document.querySelector('#' + key);
   }
 
-  //TODO hide template svg (electronGroup)
-
   // Initialize magnets
   addTranslate(elements.simulation!, elements.magnetl!); // FIRST add Translate, that is supposed to be changed later for positioning
   addTranslate(elements.simulation!, elements.magnetr!);
