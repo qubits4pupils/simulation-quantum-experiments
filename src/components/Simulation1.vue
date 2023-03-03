@@ -256,6 +256,8 @@ onMounted(() => {
   for (let key in elements) {
     elements[key] = document.querySelector('#' + key);
   }
+  console.log('on Mounted called!');
+
   [elements.electronGroup!, elements.holeTop!, elements.holeBottom!, elements.holeCenter!].forEach(el => el.style.visibility = 'hidden');
   addTranslate(elements.simulation!, elements.electronGroup!);
   centerSvgEl(elements.simulation!, elements.electronGroup!);
