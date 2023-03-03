@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="simulation1">
     <h1>Simulation {{ isSecond ? '2' : '1' }}</h1>
     <div class="container">
       <div class="left">
@@ -303,19 +303,35 @@ onMounted(() => {
   will-change: transform, opacity;
 }
 
-.container{
-  display:flex;
+//@media screen and (max-width: 1000px) {
+//
+//}
+
+.container {
+  display: flex;
   flex-direction: row;
-  .left{
-    flex: 1 1 auto;
+
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
   }
-  .right{
-    flex: 0 0 auto;
-    min-width: 400px;
-    display:flex;
+
+  .left {
+    flex: 1 0 auto;
+  }
+
+  .right {
+    flex: 0 1 auto;
+    padding: 20px;
+    display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 20px;
   }
 }
+
+//@media only screen and (max-width: 768px) {
+//  .container {
+//    flex-direction: column;
+//    background-color: red;
+//  }
+//}
 </style>

@@ -6,10 +6,18 @@
     <button @click="state = 3" style="width: 100px; height: 50px;">3</button>
     <button @click="state = 4" style="width: 100px; height: 50px;">4</button>
 
-    <keep-alive><Simulation1 :is-second="false" v-if="state === 1"/></keep-alive>
-    <keep-alive><Simulation1 :is-second="true" v-if="state === 2"/></keep-alive>
-    <keep-alive><Simulation3 v-if="state === 3"/></keep-alive>
-    <keep-alive><Simulation4 v-if="state === 4"/></keep-alive>
+    <keep-alive>
+      <Simulation1 :is-second="false" v-if="state === 1"/>
+    </keep-alive>
+    <keep-alive>
+      <Simulation1 :is-second="true" v-if="state === 2"/>
+    </keep-alive>
+    <keep-alive>
+      <Simulation3 v-if="state === 3"/>
+    </keep-alive>
+    <keep-alive>
+      <Simulation4 v-if="state === 4"/>
+    </keep-alive>
   </div>
 </template>
 
@@ -26,13 +34,22 @@ watchEffect(() => {
 })
 </script>
 
-<style>
+<style lang="scss">
+
+body{
+  min-width: fit-content;
+}
+
+.simulation1{
+
+}
 
 button {
   min-width: 100px;
   height: 50px;
 }
-#simulation{
+
+#simulation {
   max-height: 80vh;
   /*max-width: 1200px;*/
   background-color: #ececec;
@@ -40,14 +57,17 @@ button {
 
 
 .absoluteButton {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  font-size: large;
+  @media only screen and (min-width: 768px) {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-size: large;
+  }
 }
 
 
-body{
+body {
   touch-action: manipulation;
+  font-family: Arial;
 }
 
 #electronGroup #electrono {

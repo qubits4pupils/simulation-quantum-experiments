@@ -40,6 +40,7 @@ export function generateSvgUsingTemplate(svgRoot: SVGSVGElement, templateElement
   const clone = (templateElement.cloneNode(true) as SVGSVGElement);
   addTranslate(svgRoot, clone);
   clone.style.visibility = 'visible';
+  clone.style.display = ''; // TODO both necessary?
   return clone;
 }
 
