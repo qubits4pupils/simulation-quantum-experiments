@@ -7,7 +7,7 @@ import PageNotFound from "@/components/PageNotFound.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
+    path: '/Qubits4Pupils',
     name: 'home',
     component: SimulationPicker,
     alias: '/simulationen'
