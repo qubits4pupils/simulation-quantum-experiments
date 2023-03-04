@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
         alias: '/simulationen',
     },
     {
-        path: '/Qubits4Pupils/sim1',
+        path: '/sim1',
         name: 'sim1',
         component: Simulation1,
         alias: '/messprozess'
