@@ -43,7 +43,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-    history: createWebHistory(process.env.NODE_ENV === 'production' ? '/Qubits4Pupils' : '/'),
+    history: createWebHashHistory(process.env.NODE_ENV === 'production' ? '/Qubits4Pupils' : '/'),
     routes
 })
 
