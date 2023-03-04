@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-console.log('App Version 0.9.1')
+console.log('App Version 0.9.2')
 </script>
 
 <style lang="scss">

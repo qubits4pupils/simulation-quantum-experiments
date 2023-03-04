@@ -11,14 +11,12 @@ const routes: Array<RouteRecordRaw> = [
         name: 'home',
         component: SimulationPicker,
         alias: '/simulationen',
-        children: [
-            {
-                path: '/sim1',
-                name: 'sim1',
-                component: Simulation1,
-                alias: '/messprozess'
-            },
-        ]
+    },
+    {
+        path: '/Qubits4Pupils/sim1',
+        name: 'sim1',
+        component: Simulation1,
+        alias: '/messprozess'
     },
     {
         path: '/sim2',
@@ -45,7 +43,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-    history: createWebHistory('/Qubits4Pupils'),
+    history: createWebHistory(process.env.NODE_ENV === 'production' ? '/Qubits4Pupils' : '/'),
     routes
 })
 
