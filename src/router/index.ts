@@ -7,39 +7,39 @@ import PageNotFound from "@/components/PageNotFound.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/Qubits4Pupils',
+    path: '/',
     name: 'home',
     component: SimulationPicker,
-    alias: '/Qubits4Pupils/simulationen'
+    alias: '/simulationen'
   },
   {
-    path: '/Qubits4Pupils/sim1',
+    path: '/sim1',
     name: 'sim1',
     component: Simulation1,
-    alias: '/Qubits4Pupils/messprozess'
+    alias: '/messprozess'
   },
   {
-    path: '/Qubits4Pupils/sim2',
+    path: '/sim2',
     name: 'sim2',
     component: Simulation1,
     props: {
       isSecond: true
     },
-    alias: '/Qubits4Pupils/statistischer_charakter'
+    alias: '/statistischer_charakter'
   },
   {
-    path: '/Qubits4Pupils/sim3',
+    path: '/sim3',
     name: 'sim3',
     component: Simulation3,
-    alias:'/Qubits4Pupils/verschraenkung'
+    alias:'/verschraenkung'
   },
   {
-    path: '/Qubits4Pupils/sim4',
+    path: '/sim4',
     name: 'sim4',
     component: Simulation4,
     alias:'/dekohaerenzzeit'
   },
-  { path: "/Qubits4Pupils/:pathMatch(.*)*", component: PageNotFound }
+  { path: "/:pathMatch(.*)*", component: PageNotFound }
 ]
 
 const router = createRouter({
