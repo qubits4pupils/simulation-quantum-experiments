@@ -43,7 +43,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory('/Qubits4Pupils'),
   routes
 })
 
