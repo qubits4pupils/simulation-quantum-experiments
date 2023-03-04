@@ -10,36 +10,36 @@ const routes: Array<RouteRecordRaw> = [
     path: '/Qubits4Pupils',
     name: 'home',
     component: SimulationPicker,
-    alias: '/simulationen'
+    alias: '/Qubits4Pupils/simulationen'
   },
   {
-    path: '/sim1',
+    path: '/Qubits4Pupils/sim1',
     name: 'sim1',
     component: Simulation1,
-    alias: '/messprozess'
+    alias: '/Qubits4Pupils/messprozess'
   },
   {
-    path: '/sim2',
+    path: '/Qubits4Pupils/sim2',
     name: 'sim2',
     component: Simulation1,
     props: {
       isSecond: true
     },
-    alias: '/statistischer_charakter'
+    alias: '/Qubits4Pupils/statistischer_charakter'
   },
   {
-    path: '/sim3',
+    path: '/Qubits4Pupils/sim3',
     name: 'sim3',
     component: Simulation3,
-    alias:'/verschraenkung'
+    alias:'/Qubits4Pupils/verschraenkung'
   },
   {
-    path: '/sim4',
+    path: '/Qubits4Pupils/sim4',
     name: 'sim4',
     component: Simulation4,
     alias:'/dekohaerenzzeit'
   },
-  { path: "/:pathMatch(.*)*", component: PageNotFound }
+  { path: "/Qubits4Pupils/:pathMatch(.*)*", component: PageNotFound }
 ]
 
 const router = createRouter({
