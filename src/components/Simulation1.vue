@@ -1,14 +1,14 @@
 <template>
   <div class="simulation1">
-    <h1>Simulation {{ isSecond ? '2' : '1' }}</h1>
+    <h1 style="text-align: center">Simulation {{ isSecond ? '2' : '1' }}: {{ isSecond ? 'Statistischer Charakter' : 'Messprozess' }}</h1>
     <div class="container">
       <div class="left">
-        <button class="absoluteButton" id="screenButton" :disabled="currentlyAnimatedElectrons !== 0" @click="toggleScreen">Schirm ein-/ausblenden</button>
-        <button class="absoluteButton" id="shootButton" :disabled="currentlyAnimatedElectrons > 20 || disableButtons" @click="shootSingleElectron">Elektron erzeugen</button>
-        <button v-if="isSecond" class="absoluteButton" :disabled="currentlyAnimatedElectrons > 20 || disableButtons" id="shoot100Button" @click="shoot100Electrons">100 Elektronen
-          erzeugen
+        <button class="absoluteButton" id="screenButton" :disabled="currentlyAnimatedElectrons !== 0" @click="toggleScreen">Schirm<br/> ein-/ ausblenden</button>
+        <button class="absoluteButton red" id="shootButton" :disabled="currentlyAnimatedElectrons > 20 || disableButtons" @click="shootSingleElectron">Elektron erzeugen</button>
+        <button v-if="isSecond" class="absoluteButton red" :disabled="currentlyAnimatedElectrons > 20 || disableButtons" id="shoot100Button" @click="shoot100Electrons">
+          100 Elektronen <br/>erzeugen
         </button>
-        <button class="absoluteButton" id="spinButton" @click="toggleSpin">Elektronenspin (theoretisch) {{ spinVisible ? 'ausblenden' : 'anzeigen' }}</button>
+        <button class="absoluteButton" id="spinButton" @click="toggleSpin">Elektronenspin {{ spinVisible ? 'ausblenden' : 'anzeigen' }}<br>(theoretisch)</button>
         <div :style="{'visibility': loading ? 'hidden' : 'visible'}">
           <svg id="simulation" width="100%" height="100%" viewBox="0 0 12859 7580" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                xml:space="preserve" xmlns:serif="http://www.serif.com/"
@@ -106,8 +106,9 @@
       </div>
       <div class="right" v-if="isSecond">
         <h1>Zähler</h1>
-        <h3>Oben: {{ top }} (entspricht {{ (top / Math.max(top + bottom, 1) * 100).toFixed(2) }}%)</h3>
-        <h3>Unten: {{ bottom }} (entspricht {{ (bottom / Math.max(top + bottom, 1) * 100).toFixed(2) }}%)</h3>
+        <h3>Oben: {{ top }} <template v-if="top+bottom>0">(entspricht {{ (top / Math.max(top + bottom, 1) * 100).toFixed(2) }}%)</template></h3>
+        <h3>Unten: {{ bottom }} <template v-if="top+bottom>0">(entspricht {{ (bottom / Math.max(top + bottom, 1) * 100).toFixed(2) }}%)</template></h3>
+        <button class="spreadButton" :disabled="currentlyAnimatedElectrons !== 0" style="margin-top: 20px;" @click="reset()">Zurücksetzen</button>
       </div>
     </div>
 
@@ -115,6 +116,11 @@
 </template>
 
 <script lang="ts" setup>
+
+function reset(){
+  top.value = 0;
+  bottom.value = 0;
+}
 
 /*
 * TODO
@@ -327,6 +333,7 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    min-width: 25%;
   }
 }
 
