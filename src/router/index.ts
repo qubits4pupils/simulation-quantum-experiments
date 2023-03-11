@@ -5,6 +5,8 @@ import Simulation3 from "@/components/Simulation3.vue";
 import Simulation4 from "@/components/Simulation4.vue";
 import PageNotFound from "@/components/PageNotFound.vue";
 
+//https://stackoverflow.com/questions/46056414/getting-404-for-links-with-create-react-app-deployed-to-github-pages
+
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
