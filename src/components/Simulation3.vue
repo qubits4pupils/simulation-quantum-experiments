@@ -199,7 +199,7 @@ import {
   centerSvgEl,
   generateSvgUsingTemplate,
   getCenterOfSVGEl,
-  getSvgCenter
+  getSvgCenter, getSvgCenter2
 } from "@/scripts/positioning";
 
 // const simulation: Ref<SVGSVGElement | null> = ref(null);
@@ -277,6 +277,7 @@ function toggleMagnetDisable() {
 }
 
 function shootElectrons() {
+
   toggleMagnetDisable();
   state.value = 'animating';
   const magnetLPosition = +(elements.magnetl! as any).currentPosition.slice(-1);
@@ -287,8 +288,18 @@ function shootElectrons() {
   const electronRightPath: SVGPathElement = magnetRPosition == 0 ? elements.simulation!.querySelector('#pathRightStraight')! : elements.simulation!.querySelector(`#pathRight${leftSpinUp ? 'Down' : 'Up'}${magnetRPosition}`)!
   // console.log('electronLeftPath=', electronLeftPath, 'id=', `#pathLeft${leftSpinUp ? 'Up' : 'Down'}${magnetLPosition}`)
   // console.log('electronRightPath=', electronRightPath, 'id=', `#pathRight${leftSpinUp ? 'Up' : 'Down'}${magnetRPosition}`)
-  const leftSpinBorder = magnetLPosition == 0 ? 0 : getSvgCenter(elements.magnetl!).x;
-  const rightSpinBorder = magnetRPosition == 0 ? Number.POSITIVE_INFINITY : getSvgCenter(elements.magnetr!).x;
+
+  // Note the next 2 lines result in problems with safari and firefox, as they dont have .getComputedStyle(el).transform
+  // const leftSpinBorder0 = magnetLPosition == 0 ? 0 : getSvgCenter(elements.magnetl!).x;
+  // const rightSpinBorder0 = magnetRPosition == 0 ? Number.POSITIVE_INFINITY : getSvgCenter(elements.magnetr!).x;
+  // Workaround
+  const leftSpinBorder = magnetLPosition == 0 ? 0 :
+      Object.values(elements.magnetl!.transform.baseVal)
+          .reduce((a, b) => a + b.matrix.e, 0) + elements.magnetl!.getBBox().width / 2;
+  const rightSpinBorder = magnetRPosition == 0 ? Number.POSITIVE_INFINITY :
+      Object.values(elements.magnetr!.transform.baseVal)
+          .reduce((a, b) => a + b.matrix.e, 0) + elements.magnetr!.getBBox().width / 2;
+
   const maxPathOfAllPathLengths = Math.max(
       (elements.simulation!.querySelector('#pathRightDown1') as SVGPathElement).getTotalLength(),
       (elements.simulation!.querySelector('#pathRightDown2') as SVGPathElement).getTotalLength(),
@@ -300,7 +311,7 @@ function shootElectrons() {
   const rightPathLength = electronRightPath.getTotalLength();
   const maxPathLength = Math.max(leftPathLength, rightPathLength);
   const duration = maxPathLength / speed;
-  const fps = 60;
+  const fps = 120;
   const totalUpdates = Math.ceil(fps * duration);
   let i = 0;
   elements.cooperframe!.style.visibility = 'hidden';
@@ -313,7 +324,7 @@ function shootElectrons() {
     putSvgToTranslate(electronLeft!, pointElLeftPos);
     putSvgToTranslate(electronRight!, pointElRightPos);
     if (!spinResolved) {
-      // console.log('borders= ', leftSpinBorder, pointElLeftPos.x, pointElRightPos.x, rightSpinBorder )
+      // console.log('borders= ', leftSpinBorder, pointElLeftPos.x, pointElRightPos.x, rightSpinBorder)
       if (pointElLeftPos.x < leftSpinBorder || pointElRightPos.x > rightSpinBorder) {
         spinResolved = true;
         electronLeft?.classList.add(leftSpinUp ? 'up' : 'down');

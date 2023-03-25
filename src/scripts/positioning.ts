@@ -7,9 +7,19 @@ export function getSvgCenter(magnet: SVGSVGElement) {
   };
 }
 
+export function getSvgCenter2(magnet: SVGSVGElement){
+  const bb = magnet.getBBox();
+  // const pos = getTranslate(magnet);
+  return {
+    x: bb.x + bb.width / 2,
+    y: bb.y + bb.height / 2
+  };
+}
+
 
 export function getTranslate(el: SVGSVGElement) {
-  const matrix = new WebKitCSSMatrix(window.getComputedStyle(el).transform); // TODO might lead to webkit problems
+  const computedStyle = window.getComputedStyle(el).transform;
+  const matrix = new WebKitCSSMatrix(computedStyle); // TODO might lead to webkit problems
   return {x: matrix.e, y: matrix.f}
 }
 
