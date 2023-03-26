@@ -15,9 +15,9 @@
           <h2>Umgebungsparameter</h2>
           <div class="slider">
             <h3>Temperatur</h3>
-            <span>kalt</span>
+            <span>extrem kalt</span>
             <input class="temperature" v-model="amount.warmth" type="range" :min="amountBorders.warmth.min" :max="amountBorders.warmth.max || 1"/>
-            <span class="right">warm</span>
+            <span class="right">Zimmertemperatur</span>
             <h3>Druck</h3>
             <span>Vakuum</span>
             <input class="pressure" v-model="amount.airParticle" type="range" :min="amountBorders.airParticle.min" :max="amountBorders.airParticle.max || 1"/>
