@@ -185,7 +185,7 @@
             <stop offset="1" style="stop-color:#4e72be;stop-opacity:0"/></radialGradient></defs></svg>
 
 
-      <div class="time" ref="time">12:13:52:124</div>
+      <div class="time" ref="time"></div>
     </div>
   </div>
 </template>
