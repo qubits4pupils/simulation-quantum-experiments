@@ -3,6 +3,7 @@ import SimulationPicker from "@/components/SimulationPicker.vue";
 import Simulation1 from "@/components/Simulation1.vue";
 import Simulation3 from "@/components/Simulation3.vue";
 import Simulation4 from "@/components/Simulation4.vue";
+import Impressum from "@/components/Impressum.vue";
 import PageNotFound from "@/components/PageNotFound.vue";
 
 //https://stackoverflow.com/questions/46056414/getting-404-for-links-with-create-react-app-deployed-to-github-pages
@@ -40,6 +41,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'sim4',
         component: Simulation4,
         alias: '/dekohaerenzzeit'
+    },
+    {
+        path: '/impressum',
+        name: 'impressum',
+        component: Impressum,
     },
     {path: "/:pathMatch(.*)*", component: PageNotFound}
 ]
