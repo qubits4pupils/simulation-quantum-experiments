@@ -291,10 +291,14 @@ function stopTime() {
   clearInterval(timeIntervalId);
 }
 
+let startDateTime = 0;
+
 function startTime() {
+  startDateTime = new Date().getTime();
   timeIntervalId = setInterval(() => {
     const date = new Date();
-    const timeString = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}`
+    const timeInMilliseconds = date.getTime() - startDateTime!;
+    const timeString = `${Math.floor(timeInMilliseconds/1000)}:${timeInMilliseconds%1000}`
     time.value!.textContent = timeString;
   }, 10)
 }
@@ -356,9 +360,15 @@ function shootElectrons() {
     const pointElRightPos = electronRightPath.getPointAtLength(length);
     putSvgToTranslate(electronLeft!, pointElLeftPos);
     putSvgToTranslate(electronRight!, pointElRightPos);
+
+    let timeString;
+
     if (!spinLResolved && pointElLeftPos.x < leftSpinBorder) {
+      const date = new Date();
+      const timeInMilliseconds = date.getTime() - startDateTime!;
+      timeString = `Zeitpunkt der Messung:\n${Math.floor(timeInMilliseconds/1000)}:${timeInMilliseconds%1000}`
       if(showTime.value)
-        showTimeOfMeasurement('l'+magnetLPosition);
+        showTimeOfMeasurement('l'+magnetLPosition, timeString);
       if(!spinRResolved){
         electronLeft?.classList.add(leftSpinUp ? 'up' : 'down');
         electronRight?.classList.add(leftSpinUp ? 'down' : 'up');
@@ -367,8 +377,13 @@ function shootElectrons() {
     }
 
     if (!spinRResolved && pointElRightPos.x > rightSpinBorder) {
+      if(!timeString){
+        const date = new Date();
+        const timeInMilliseconds = date.getTime() - startDateTime!;
+        timeString = `Zeitpunkt der Messung:\n${Math.floor(timeInMilliseconds/1000)}:${timeInMilliseconds%1000}`
+      }
       if(showTime.value)
-        showTimeOfMeasurement('r'+magnetRPosition);
+        showTimeOfMeasurement('r'+magnetRPosition, timeString);
       if(!spinLResolved){
         electronLeft?.classList.add(leftSpinUp ? 'up' : 'down');
         electronRight?.classList.add(leftSpinUp ? 'down' : 'up');
@@ -422,14 +437,11 @@ function positionButtonsOnSimulation() {
 }
 
 
-function showTimeOfMeasurement(pos:string){
+function showTimeOfMeasurement(pos:string, timeString: string){
   console.log('showTimeOfMeasurement')
   // create el
   const el = document.createElement('div');
-
-  const date = new Date();
-  const timeString =
-  el.textContent = `Zeitpunkt der Messung:\n${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}`
+  el.textContent = timeString
   // attach element
   const posEl: SVGSVGElement  = document.querySelector(`#time${pos}`)!;
   const {x, y, width, height} = posEl.getBoundingClientRect();
