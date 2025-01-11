@@ -5,18 +5,6 @@
     </h1>
     <div class="container">
       <div class="left">
-        <button class="absoluteButton" id="screenButton" :disabled="currentlyAnimatedElectrons !== 0" @click="toggleScreen">
-          {{ $t('simulation1.toggleScreen') }}
-        </button>
-        <button class="absoluteButton red" id="shootButton" :disabled="currentlyAnimatedElectrons > 20 || disableButtons" @click="shootSingleElectron">
-          {{ $t('simulation1.generateElectron') }}
-        </button>
-        <button v-if="isSecond" class="absoluteButton red" :disabled="currentlyAnimatedElectrons > 20 || disableButtons" id="shoot100Button" @click="shoot100Electrons">
-          {{ $t('simulation2.generate100Electrons') }}
-        </button>
-        <button class="absoluteButton" id="spinButton" @click="toggleSpin">
-          {{ $t(spinVisible ? 'simulation2.hideSpin' : 'simulation2.showSpin') }}
-        </button>
         <div :style="{'visibility': loading ? 'hidden' : 'visible'}">
           <svg id="simulation" width="100%" height="100%" viewBox="0 0 12859 7580" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                xml:space="preserve" xmlns:serif="http://www.serif.com/"
@@ -114,6 +102,18 @@
 
 
         </div>
+        <button class="absoluteButton" id="screenButton" :disabled="currentlyAnimatedElectrons !== 0" @click="toggleScreen">
+          {{ $t('simulation1.toggleScreen') }}
+        </button>
+        <button class="absoluteButton red" id="shootButton" :disabled="currentlyAnimatedElectrons > 20 || disableButtons" @click="shootSingleElectron">
+          {{ $t('simulation1.generateElectron') }}
+        </button>
+        <button v-if="isSecond" class="absoluteButton red" :disabled="currentlyAnimatedElectrons > 20 || disableButtons" id="shoot100Button" @click="shoot100Electrons">
+          {{ $t('simulation2.generate100Electrons') }}
+        </button>
+        <button class="absoluteButton" id="spinButton" @click="toggleSpin">
+          {{ $t(spinVisible ? 'simulation2.hideSpin' : 'simulation2.showSpin') }}
+        </button>
       </div>
       <div class="right" v-if="isSecond">
         <h1>{{ $t('simulation2.counter') }}</h1>

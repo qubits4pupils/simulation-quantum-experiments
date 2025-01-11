@@ -83,7 +83,7 @@ export const messages = {
             },
             email: {
                 "label": "E-Mail",
-                "value": "c.albert@ifw-dresden.de"
+                "value": "c.albert{'@'}ifw-dresden.de"
             },
             representatives: {
                 "label": "Representatives",
@@ -188,7 +188,7 @@ Individuals or organisations providing information on the internet are only resp
             },
             email: {
                 "label": "E-Mail",
-                "value": "c.albert@ifw-dresden.de"
+                "value": "c.albert{'@'}ifw-dresden.de"
             },
             representatives: {
                 "label": "Vertreter",
