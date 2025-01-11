@@ -3,15 +3,6 @@
     <h1 style="text-align: center">
       {{ $t('simulation3.index') }}: {{ $t('simulation3.label') }}
     </h1>
-    <button class="absoluteButton red" id="shootButton" @click="shootElectrons" :disabled="state !== 'initialized'">
-      {{ $t('simulation3.disintegrateCooperPair') }}
-    </button>
-    <button class="absoluteButton" id="timeButton" @click="toggleTime" :disabled="state !== 'initialized'">
-      {{ $t(showTime ? 'simulation3.hideTime' : 'simulation3.showTime') }}
-    </button>
-    <button class="absoluteButton" id="spinButton" @click="toggleSpin" :disabled="state === 'animating'">
-      {{ $t(spinVisible ? 'simulation2.hideSpin' : 'simulation2.showSpin') }}
-    </button>
     <div :style="{'visibility': loading ? 'hidden' : 'visible'}" class="simulation-container">
       <svg id="simulation" ref="simulation" width="100%" height="100%"
            viewBox="0 0 13892 6859" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
@@ -196,9 +187,17 @@
             <stop offset="0.77" style="stop-color:#4e72be;stop-opacity:0.23"/>
             <stop offset="1" style="stop-color:#4e72be;stop-opacity:0"/></radialGradient></defs></svg>
 
-
       <div class="time" ref="time"></div>
     </div>
+    <button class="absoluteButton red" id="shootButton" @click="shootElectrons" :disabled="state !== 'initialized'">
+      {{ $t('simulation3.disintegrateCooperPair') }}
+    </button>
+    <button class="absoluteButton" id="timeButton" @click="toggleTime" :disabled="state !== 'initialized'">
+      {{ $t(showTime ? 'simulation3.hideTime' : 'simulation3.showTime') }}
+    </button>
+    <button class="absoluteButton" id="spinButton" @click="toggleSpin" :disabled="state === 'animating'">
+      {{ $t(spinVisible ? 'simulation2.hideSpin' : 'simulation2.showSpin') }}
+    </button>
   </div>
 </template>
 
@@ -297,7 +296,7 @@ function toggleMagnetDisable() {
 let timeIntervalId = -1;
 
 function stopTime() {
-  time.value!.textContent = '';
+  time.value!.textContent = `0${t('simulation3.decimalSeparator')}000s`;
   clearInterval(timeIntervalId);
 }
 
@@ -563,12 +562,26 @@ onMounted(() => {
 }
 
 .time {
-  position: absolute;
-  top: 10px;
-  left: 10px;
   font-family: monospace;
   font-size: 48px;
   color: rgb(4, 13, 65);
+}
+
+@media only screen and (min-width: 769px) {
+  .time {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .time {
+    position: relative;
+    //border: 1px solid red;
+    min-height: 1.3em;
+    text-align: center;
+  }
 }
 
 .simulation-container {

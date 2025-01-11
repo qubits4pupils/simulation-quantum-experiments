@@ -43,7 +43,7 @@
           </button>
         </div>
         <div class="simulation">
-          <h2>{{$t('simulation4.simulation')}}</h2>
+          <h2>{{ $t('simulation4.simulation') }}</h2>
           <!--          <div style="width: 500px; height: 300px; background-color: grey"></div>-->
           <svg id="simulation" width="100%" height="100%" viewBox="0 0 4600 3284" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                xml:space="preserve" xmlns:serif="http://www.serif.com/"
@@ -135,7 +135,7 @@
 
         </div>
         <div class="reset">
-          <button @click="reset()" :disabled="state !== 'finished'">{{ $t('simulation4.reset') }}</button>
+          <button @click="reset()" class="spreadButton" :disabled="state !== 'finished'">{{ $t('simulation4.reset') }}</button>
         </div>
         <div class="time">
           <h2>{{ $t('simulation4.decoherenceTime') }}</h2>
@@ -675,17 +675,26 @@ label {
   display: block;
 }
 
+
+@media only screen and (max-width: 768px) {
+  .reset{
+    width:100%;
+  }
+}
+
 .container {
+  display: grid;
   @media only screen and (min-width: 769px) {
-    display: grid;
     grid-template:
       "parameters simulation simulation" 1fr
       "parameters reset time" auto / auto auto 1fr;
   }
-
-
   @media only screen and (max-width: 768px) {
-    display: block;
+    grid-template:
+    "parameters" auto
+    "simulation" auto
+    "time" auto
+    "reset" auto / 1fr;
     .simulation {
       min-height: 30vh;
     }
@@ -750,10 +759,7 @@ label {
   animation-iteration-count: 1;
 }
 
-.spreadButton {
-  width: 100%;
-  margin: 5px 0;
-}
+
 
 .objectButtons {
   display: grid;
