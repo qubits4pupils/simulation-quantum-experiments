@@ -1,10 +1,16 @@
 <template>
   <div id="sim3-container">
-    <h1 style="text-align: center">Simulation 3: Verschränkung/EPR</h1>
-    <button class="absoluteButton red" id="shootButton" @click="shootElectrons" :disabled="state !== 'initialized'">Cooper-Paar auseinander fliegen lassen</button>
-    <button class="absoluteButton" id="timeButton" @click="toggleTime" :disabled="state !== 'initialized'">Zeit {{showTime ? 'ausblenden' : 'anzeigen'}}</button>
-    <button class="absoluteButton" id="spinButton" @click="toggleSpin" :disabled="state === 'animating'">Elektronenspin (theoretisch)
-      {{ spinVisible ? 'ausblenden' : 'anzeigen' }}
+    <h1 style="text-align: center">
+      {{ $t('simulation3.index') }}: {{ $t('simulation3.label') }}
+    </h1>
+    <button class="absoluteButton red" id="shootButton" @click="shootElectrons" :disabled="state !== 'initialized'">
+      {{ $t('simulation3.disintegrateCooperPair') }}
+    </button>
+    <button class="absoluteButton" id="timeButton" @click="toggleTime" :disabled="state !== 'initialized'">
+      {{ $t(showTime ? 'simulation3.hideTime' : 'simulation3.showTime') }}
+    </button>
+    <button class="absoluteButton" id="spinButton" @click="toggleSpin" :disabled="state === 'animating'">
+      {{ $t(spinVisible ? 'simulation2.hideSpin' : 'simulation2.showSpin') }}
     </button>
     <div :style="{'visibility': loading ? 'hidden' : 'visible'}" class="simulation-container">
       <svg id="simulation" ref="simulation" width="100%" height="100%"
@@ -115,9 +121,9 @@
                 d="M636.31,597.954c5.183,1.904 15.545,5.713 19.745,12.213c5.059,7.821 8.109,23.662 10.609,34.721c2.341,10.383 3.7,21.008 4.371,31.633c0.729,11.575 0.208,25.208 -0,37.812c-0.225,13.438 -0.159,31.442 -1.342,42.817c-0.9,8.654 -3.788,17.675 -5.758,25.454c-1.805,7.125 -4.642,16.517 -6.059,21.209"
                 style="fill:none;stroke:#000101;stroke-width:13.75px;"/></g></g></g>
           <g id="electronu" serif:id="electronu"><g id="g2571" serif:id="g257"><circle cx="298.147" cy="595.429" r="425.93" style="fill:url(#_Radial5);"/><path id="path2411"
-                                                                                                                                                                 serif:id="path241"
-                                                                                                                                                                 d="M270.855,962.525l0,-684.746c0,-15.062 12.23,-27.291 27.292,-27.291c15.063,-0 27.292,12.229 27.292,27.291l-0,684.746l149.25,0l-176.542,235.392l-176.546,-235.392l149.254,0Z"
-                                                                                                                                                                 style="fill:#359b73;"/><g
+                                                                                                                                                                serif:id="path241"
+                                                                                                                                                                d="M270.855,962.525l0,-684.746c0,-15.062 12.23,-27.291 27.292,-27.291c15.063,-0 27.292,12.229 27.292,27.291l-0,684.746l149.25,0l-176.542,235.392l-176.546,-235.392l149.254,0Z"
+                                                                                                                                                                style="fill:#359b73;"/><g
               id="g2551" serif:id="g255"><path id="path2451" serif:id="path245" d="M210.643,461.021c-0,21.096 3.408,40.437 3.408,62.492c0,4.791 3.892,8.683 8.684,8.683c4.787,-0 8.679,-3.892 8.679,-8.683c-0,-22.055 -3.409,-41.396 -3.409,-62.492c0,-4.792 -3.891,-8.679 -8.683,-8.679c-4.787,-0 -8.679,3.887 -8.679,8.679Z" style="fill:#000101;"/>
             <path id="path2471" serif:id="path247"
                   d="M351.876,493.388c-0.066,1.32 -0.3,6.575 0.104,8.491c0.138,0.663 0.325,1.284 0.55,1.854c-0.062,1.371 -0.104,3.275 0.096,4.154c0.134,0.58 0.309,1.121 0.525,1.63c-0.037,0.912 -0.1,2.408 -0.1,3.012c0,4.025 0.759,7.704 0.759,12.121c-0,4.792 3.887,8.679 8.679,8.679c4.791,0 8.683,-3.887 8.683,-8.679c0,-4.417 -0.758,-8.096 -0.758,-12.121c-0,-1.742 0.216,-5.225 -0.221,-7.158c-0.108,-0.483 -0.242,-0.938 -0.4,-1.367c0.067,-1.375 0.112,-3.354 -0.092,-4.254c-0.158,-0.683 -0.375,-1.321 -0.646,-1.908c0.08,-1.179 0.213,-3.529 0.2,-4.8c-0.016,-1.671 -0.266,-3.167 -0.654,-4.4c0.079,-0.925 0.296,-3.6 0.296,-4.517c0,-6.871 0.758,-13.262 0.758,-20.075c0,-4.787 -3.891,-8.679 -8.679,-8.679c-4.791,-0 -8.683,3.892 -8.683,8.679c-0,6.813 -0.758,13.204 -0.758,20.075c-0,1.2 -0.35,3.446 -0.317,5.2c0.033,1.533 0.287,2.913 0.658,4.063Z"
@@ -197,7 +203,6 @@
 </template>
 
 <script lang="ts" setup>
-
 import {ref, Ref, onMounted} from "vue";
 import {moveElementAlongPathElement, putSvgToTranslate} from "@/scripts/svgAnimation";
 import {makeDraggable, makeDropZoneDropTarget} from "@/scripts/makeDraggablev2";
@@ -208,6 +213,11 @@ import {
   getCenterOfSVGEl,
   getSvgCenter, getSvgCenter2
 } from "@/scripts/positioning";
+
+import {useI18n} from 'vue-i18n'
+
+const {t, locale} = useI18n() // `t` method for translation, `locale` for the current language
+
 
 // const simulation: Ref<SVGSVGElement | null> = ref(null);
 const loading = ref(true);
@@ -298,12 +308,12 @@ function startTime() {
   timeIntervalId = setInterval(() => {
     const date = new Date();
     const timeInMilliseconds = date.getTime() - startDateTime!;
-    const timeString = `${Math.floor(timeInMilliseconds/1000)}:${timeInMilliseconds%1000}`
+    const timeString = Math.floor(timeInMilliseconds / 1000) + t('simulation3.decimalSeparator') + String(timeInMilliseconds % 1000).padStart(3, '0') + 's'
     time.value!.textContent = timeString;
   }, 10)
 }
 
-let timeOfMeasurements :HTMLElement[] = []
+let timeOfMeasurements: HTMLElement[] = []
 
 function shootElectrons() {
   toggleMagnetDisable();
@@ -311,7 +321,7 @@ function shootElectrons() {
   timeOfMeasurements.forEach(e => e.remove())
   timeOfMeasurements = []
 
-  if(showTime.value)
+  if (showTime.value)
     startTime();
   const magnetLPosition = +(elements.magnetl! as any).currentPosition.slice(-1);
   const magnetRPosition = +(elements.magnetr! as any).currentPosition.slice(-1);
@@ -366,10 +376,10 @@ function shootElectrons() {
     if (!spinLResolved && pointElLeftPos.x < leftSpinBorder) {
       const date = new Date();
       const timeInMilliseconds = date.getTime() - startDateTime!;
-      timeString = `Zeitpunkt der Messung:\n${Math.floor(timeInMilliseconds/1000)}:${timeInMilliseconds%1000}`
-      if(showTime.value)
-        showTimeOfMeasurement('l'+magnetLPosition, timeString);
-      if(!spinRResolved){
+      timeString = t('simulation3.measuredDuration') + ':\n' + Math.floor(timeInMilliseconds / 1000) + t('simulation3.decimalSeparator') + (timeInMilliseconds % 1000) + `s`
+      if (showTime.value)
+        showTimeOfMeasurement('l' + magnetLPosition, timeString);
+      if (!spinRResolved) {
         electronLeft?.classList.add(leftSpinUp ? 'up' : 'down');
         electronRight?.classList.add(leftSpinUp ? 'down' : 'up');
       }
@@ -377,14 +387,14 @@ function shootElectrons() {
     }
 
     if (!spinRResolved && pointElRightPos.x > rightSpinBorder) {
-      if(!timeString){
+      if (!timeString) {
         const date = new Date();
         const timeInMilliseconds = date.getTime() - startDateTime!;
-        timeString = `Zeitpunkt der Messung:\n${Math.floor(timeInMilliseconds/1000)}:${timeInMilliseconds%1000}`
+        timeString = t('simulation3.measuredDuration') + ':\n' + Math.floor(timeInMilliseconds / 1000) + t('simulation3.decimalSeparator') + (timeInMilliseconds % 1000) + `s`
       }
-      if(showTime.value)
-        showTimeOfMeasurement('r'+magnetRPosition, timeString);
-      if(!spinLResolved){
+      if (showTime.value)
+        showTimeOfMeasurement('r' + magnetRPosition, timeString);
+      if (!spinLResolved) {
         electronLeft?.classList.add(leftSpinUp ? 'up' : 'down');
         electronRight?.classList.add(leftSpinUp ? 'down' : 'up');
       }
@@ -422,10 +432,15 @@ let showTime = ref(false);
 
 function toggleTime() {
   showTime.value = !showTime.value;
+  if (showTime.value) {
+    time.value!.textContent = `0${t('simulation3.decimalSeparator')}000s`;
+  } else {
+    time.value!.textContent = '';
+  }
 }
 
 function positionButtonsOnSimulation() {
-  for (let buttonName of ['spin', 'shoot','time']) {
+  for (let buttonName of ['spin', 'shoot', 'time']) {
     const button: HTMLElement | null = document.querySelector('#' + buttonName + 'Button');
     if (button) {
       const posEl: SVGSVGElement = document.querySelector('#' + buttonName + 'ButtonPos')!;
@@ -437,17 +452,17 @@ function positionButtonsOnSimulation() {
 }
 
 
-function showTimeOfMeasurement(pos:string, timeString: string){
+function showTimeOfMeasurement(pos: string, timeString: string) {
   console.log('showTimeOfMeasurement')
   // create el
   const el = document.createElement('div');
   el.textContent = timeString
   // attach element
-  const posEl: SVGSVGElement  = document.querySelector(`#time${pos}`)!;
+  const posEl: SVGSVGElement = document.querySelector(`#time${pos}`)!;
   const {x, y, width, height} = posEl.getBoundingClientRect();
   el.style.left = x + width / 2 + 'px';
   el.style.top = y + height / 2 + 'px';
-  el.style.position ='absolute';
+  el.style.position = 'absolute';
   el.style.transform = 'translate(-50%, -50%)';
   el.style.whiteSpace = 'pre-wrap';
   el.style.textAlign = 'center';
@@ -547,17 +562,11 @@ onMounted(() => {
   cursor: not-allowed;
 }
 
-@font-face {
-  font-family: "Liquid Crystal";
-  src: local("Liquid Crystal"),
-  url(../assets/LiquidCrystal-Normal.otf) format("truetype");
-}
-
 .time {
   position: absolute;
   top: 10px;
   left: 10px;
-  font-family: "Liquid Crystal";
+  font-family: monospace;
   font-size: 48px;
   color: rgb(4, 13, 65);
 }

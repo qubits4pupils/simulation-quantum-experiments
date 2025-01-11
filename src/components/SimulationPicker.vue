@@ -1,50 +1,49 @@
 <template>
   <div>
-    <div id="menu" v-show="menu">
-      <div class="simulation-link" @click="state=1;menu=false">
-        <div class="subtitle">Simulation 1</div>
-        Messprozess
-      </div>
-      <div class="simulation-link" @click="state=2;menu=false">
-        <div class="subtitle">Simulation 2</div>
-        Statistischer Charakter
-      </div>
-      <div class="simulation-link" @click="state=3;menu=false">
-        <div class="subtitle">Simulation 3</div>
-        Verschränkung/EPR
-      </div>
-      <div class="simulation-link" @click="state=4;menu=false">
-        <div class="subtitle">Simulation 4</div>
-        Dekohärenzzeit
-      </div>
-      <div class="simulation-link" @click="goToImpressum()">Impressum</div>
-      <div class="simulation-link close" @click="menu=false"></div>
-
-    </div>
-
     <div class="burger-menu" @click="showMenu">
       <span></span>
       <span></span>
       <span></span>
     </div>
 
-<!--    <button @click="state = 1" style="width: 100px; height: 50px;">1</button>-->
-<!--    <button @click="state = 2" style="width: 100px; height: 50px;">2</button>-->
-<!--    <button @click="state = 3" style="width: 100px; height: 50px;">3</button>-->
-<!--    <button @click="state = 4" style="width: 100px; height: 50px;">4</button>-->
+    <div id="menu" v-show="menu">
+      <div class="simulation-link" @click="state=1;menu=false">
+        <div class="subtitle">{{$t('simulation1.index')}}</div>
+        {{$t('simulation1.label')}}
+      </div>
+      <div class="simulation-link" @click="state=2;menu=false">
+        <div class="subtitle">{{$t('simulation2.index')}}</div>
+        {{$t('simulation2.label')}}
+      </div>
+      <div class="simulation-link" @click="state=3;menu=false">
+        <div class="subtitle">{{$t('simulation3.index')}}</div>
+        {{$t('simulation3.label')}}
+      </div>
+      <div class="simulation-link" @click="state=4;menu=false">
+        <div class="subtitle">{{$t('simulation4.index')}}</div>
+        {{$t('simulation4.label')}}
+      </div>
+      <div class="simulation-link" @click="goToImpressum()">
+        {{$t('imprint.label')}}
+      </div>
+      <div class="simulation-link close" @click="menu=false"></div>
+    </div>
 
-    <keep-alive>
-      <Simulation1 :is-second="false" v-if="state === 1"/>
-    </keep-alive>
-    <keep-alive>
-      <Simulation1 :is-second="true" v-if="state === 2"/>
-    </keep-alive>
-    <keep-alive>
-      <Simulation3 v-if="state === 3"/>
-    </keep-alive>
-    <keep-alive>
-      <Simulation4 v-if="state === 4"/>
-    </keep-alive>
+    <div class="simulation-picker-container">
+      <keep-alive>
+        <Simulation1 :is-second="false" v-if="state === 1"/>
+      </keep-alive>
+      <keep-alive>
+        <Simulation1 :is-second="true" v-if="state === 2"/>
+      </keep-alive>
+      <keep-alive>
+        <Simulation3 v-if="state === 3"/>
+      </keep-alive>
+      <keep-alive>
+        <Simulation4 v-if="state === 4"/>
+      </keep-alive>
+    </div>
+
   </div>
 </template>
 
@@ -53,7 +52,6 @@ import {ref, Ref, onMounted, watch, watchEffect} from "vue";
 import Simulation1 from "@/components/Simulation1.vue";
 import Simulation3 from "@/components/Simulation3.vue";
 import Simulation4 from "@/components/Simulation4.vue";
-import Simulation2 from "@/components/Simulation2.vue";
 import router from "@/router";
 
 const menu = ref(false);
@@ -105,6 +103,8 @@ watchEffect(() => {
 
 .burger-menu{
   position: absolute;
+  top:24px;
+  left:16px;
   display:flex;
   cursor: pointer;
   flex-direction: column;
@@ -115,6 +115,7 @@ watchEffect(() => {
     width: 100%;
     height: 6px;
     background-color: grey;
+    border-radius: 4px;
 
     &:nth-child(1){
       //background-color: yellow;
@@ -154,6 +155,12 @@ watchEffect(() => {
 }
 .close:after {
   transform: rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  .simulation-picker-container {
+    padding-top: 2em;
+  }
 }
 
 </style>

@@ -1,7 +1,7 @@
 <template>
-<div>
-  <h1>Simulation 2</h1>
-</div>
+  <div>
+    <h1>{{ $t('simulation2.index') }}: {{ $t('simulation2.label') }}</h1>
+  </div>
 </template>
 
 <script lang="ts" setup>
