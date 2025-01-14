@@ -186,7 +186,10 @@
             <stop offset="0.55" style="stop-color:#4e72be;stop-opacity:0.96"/>
             <stop offset="0.77" style="stop-color:#4e72be;stop-opacity:0.23"/>
             <stop offset="1" style="stop-color:#4e72be;stop-opacity:0"/></radialGradient></defs></svg>
-
+      <div class="measuredTime" ref="measuredTime">
+        <div class="left"></div>
+        <div class="right"></div>
+      </div>
       <div class="time" ref="time"></div>
     </div>
     <button class="absoluteButton red" id="shootButton" @click="shootElectrons" :disabled="state !== 'initialized'">
@@ -296,7 +299,9 @@ function toggleMagnetDisable() {
 let timeIntervalId = -1;
 
 function stopTime() {
-  time.value!.textContent = `0${t('simulation3.decimalSeparator')}000s`;
+  if (showTime.value) {
+    // time.value!.textContent = `0${t('simulation3.decimalSeparator')}000s`;
+  }
   clearInterval(timeIntervalId);
 }
 
@@ -312,13 +317,13 @@ function startTime() {
   }, 10)
 }
 
-let timeOfMeasurements: HTMLElement[] = []
 
 function shootElectrons() {
   toggleMagnetDisable();
   state.value = 'animating';
-  timeOfMeasurements.forEach(e => e.remove())
-  timeOfMeasurements = []
+  for (const measuredTime of document.querySelector('.measuredTime')!.children) {
+    measuredTime.textContent = '';
+  }
 
   if (showTime.value)
     startTime();
@@ -435,6 +440,9 @@ function toggleTime() {
     time.value!.textContent = `0${t('simulation3.decimalSeparator')}000s`;
   } else {
     time.value!.textContent = '';
+    for (const measuredTime of document.querySelector('.measuredTime')!.children) {
+      measuredTime.textContent = '';
+    }
   }
 }
 
@@ -451,24 +459,39 @@ function positionButtonsOnSimulation() {
 }
 
 
+// function showTimeOfMeasurement(pos: string, timeString: string) {
+//   console.log('showTimeOfMeasurement')
+//   // create el
+//   const el = document.createElement('div');
+//   el.textContent = timeString
+//   // attach element
+//   const posEl: SVGSVGElement = document.querySelector(`#time${pos}`)!;
+//   const {x, y, width, height} = posEl.getBoundingClientRect();
+//   el.style.left = x + width / 2 + 'px';
+//   el.style.top = y + height / 2 + 'px';
+//   el.style.position = 'absolute';
+//   el.style.transform = 'translate(-50%, -50%)';
+//   el.style.whiteSpace = 'pre-wrap';
+//   el.style.textAlign = 'center';
+//   el.className = 'time-left'
+//
+//   document.querySelector('#sim3-container')!.appendChild(el);
+//   //saveElement
+//   timeOfMeasurements.push(el);
+// }
+
 function showTimeOfMeasurement(pos: string, timeString: string) {
   console.log('showTimeOfMeasurement')
   // create el
-  const el = document.createElement('div');
+  const el = document.querySelector(`.measuredTime ${pos.startsWith('l') ? '.left' : '.right'}`) as HTMLElement;
   el.textContent = timeString
   // attach element
-  const posEl: SVGSVGElement = document.querySelector(`#time${pos}`)!;
-  const {x, y, width, height} = posEl.getBoundingClientRect();
-  el.style.left = x + width / 2 + 'px';
-  el.style.top = y + height / 2 + 'px';
-  el.style.position = 'absolute';
-  el.style.transform = 'translate(-50%, -50%)';
-  el.style.whiteSpace = 'pre-wrap';
-  el.style.textAlign = 'center';
 
-  document.querySelector('#sim3-container')!.appendChild(el);
-  //saveElement
-  timeOfMeasurements.push(el);
+  const posEl: SVGSVGElement = document.querySelector(`#time${pos}`)!;
+  const parentElPos = document.querySelector('#simulation')!.getBoundingClientRect()
+  const {x, y, width, height} = posEl.getBoundingClientRect();
+  el.style.left = x - parentElPos.x + width / 2 + 'px';
+  el.style.top = y - parentElPos.y + height / 2 + 'px';
 }
 
 onMounted(() => {
@@ -591,5 +614,27 @@ onMounted(() => {
 
 button {
   z-index: 10;
+}
+
+
+.measuredTime {
+  display: flex;
+  flex-direction: row;
+
+  .left, .right {
+    text-align: center;
+    white-space: pre-wrap;
+    text-wrap-mode: nowrap;
+
+    @media only screen and (min-width: 769px) {
+      position: absolute;
+      transform: translate(-50%, -50%);
+
+    }
+    @media only screen and (max-width: 768px) {
+      width: 50%;
+
+    }
+  }
 }
 </style>
