@@ -36,7 +36,11 @@
         </option>
       </select>
     </div>
-    <router-view :state="state"/>
+    <router-view v-slot="{ Component }">
+      <keep-alive>
+        <component :is="Component" :state="state"/>
+      </keep-alive>
+    </router-view>
   </div>
 </template>
 
