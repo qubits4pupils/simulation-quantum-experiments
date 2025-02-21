@@ -5,6 +5,6 @@ const publicPath = process.env.NODE_ENV === "production" ? `/${repoName}/` : "/"
 
 module.exports = defineConfig({
     transpileDependencies: true,
-    publicPath: publicPath,
+    publicPath: "/",
     outputDir: 'docs'
 })
