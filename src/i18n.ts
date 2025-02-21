@@ -107,7 +107,7 @@ Individuals or organisations providing information on the internet are only resp
     },
     de: {
         simulation1: {
-            index: "Simulation 1",
+            index: "SIMULATION 1",
             label: "Messprozess",
             generateElectron: "Elektron erzeugen",
             showSpin: "Elektronenspin anzeigen (theoretisch)",
