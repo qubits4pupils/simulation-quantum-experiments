@@ -50,8 +50,11 @@ const routes: Array<RouteRecordRaw> = [
     {path: "/:pathMatch(.*)*", component: PageNotFound}
 ]
 
+const repoName = process.env.GITHUB_REPOSITORY?.split('/')[1] || '';
+const publicPath = process.env.NODE_ENV === "production" ? `/${repoName}/` : "/";
+
 const router = createRouter({
-    history: createWebHashHistory("."),
+    history: createWebHashHistory(publicPath),
     routes
 })
 
