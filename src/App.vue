@@ -57,6 +57,8 @@ const route = useRoute()
 // Define the languages and their associated flags
 const selectedLanguage = ref(locale.value); // Default to current locale
 
+const hostname = window.location.hostname;
+
 // Watch for changes in the 'lang' query parameter
 watch(
     () => route.query.lang,
@@ -64,6 +66,20 @@ watch(
       if (newLang) {
         locale.value = (newLang as string)
         selectedLanguage.value = (newLang as string)
+      } else {
+        const lastIndexOfDot = hostname.lastIndexOf(".")
+        if (lastIndexOfDot !== -1) {
+          const domainEnding = hostname.slice(lastIndexOfDot)
+          const domainLanguage = {
+            ".de": "de",
+            ".com": "en"
+          }[domainEnding]
+          if (domainLanguage) {
+            console.info(`Setting Language to ${domainLanguage} due to domain ending ${domainEnding}`)
+            locale.value = domainLanguage
+            selectedLanguage.value = domainLanguage
+          }
+        }
       }
     },
     {immediate: true}
@@ -372,7 +388,7 @@ body {
   width: 100%;
   margin: 5px 0;
   @media (max-width: 768px) {
-    font-size:larger;
+    font-size: larger;
   }
 }
 
